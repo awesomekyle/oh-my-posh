@@ -11,6 +11,10 @@ function Format-BranchName {
 }
 
 function Get-VCSStatus {
+    $HideStatus = git config --get oh-my-zsh.hide-status | Out-String
+    if ($HideStatus.Contains("1")) {
+        return $null
+    }
     if (Get-Command Get-GitStatus -errorAction SilentlyContinue) {
         $global:GitStatus = Get-GitStatus
         return $global:GitStatus
